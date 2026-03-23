@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef } from 'react'
 import { StoredDocument } from '@/lib/types'
-import { getDocuments, saveDocument, deleteDocument, generateId } from '@/lib/store'
+import { saveDocument, deleteDocument } from '@/lib/store'
 import { estimateTokens } from '@/lib/chunker'
 
 interface DocumentManagerProps {
@@ -63,12 +63,12 @@ export default function DocumentManager({ documents, onUpdate }: DocumentManager
     }
   }
 
-  const handleDrop = useCallback(async (e: React.DragEvent) => {
+  const handleDrop = async (e: React.DragEvent) => {
     e.preventDefault()
     setDragOver(false)
     const file = e.dataTransfer.files[0]
     if (file) await processFile(file)
-  }, [])
+  }
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]

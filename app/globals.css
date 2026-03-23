@@ -1,9 +1,9 @@
+/* Fuentes Google: Fraunces (títulos) y Figtree (texto) */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Figtree:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Fuentes Google: Fraunces (títulos) y Figtree (texto) */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Figtree:wght@400;500;600&display=swap');
 
 :root {
   --blue: #004A8F;

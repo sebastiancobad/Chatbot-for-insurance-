@@ -60,7 +60,6 @@ export default function AdminPanel() {
 
   const totalChunks = documents.reduce((sum, d) => sum + d.chunks.length, 0)
   const totalTokens = getTotalTokenEstimate()
-  const apiConfigured = true // La API key se configura via env var en el servidor
 
   const tabs = [
     { id: 'agency' as const, label: 'Agencia', icon: '🏢' },
@@ -256,11 +255,9 @@ export default function AdminPanel() {
               <p className="text-3xl font-bold text-blue">~{(totalTokens / 1000).toFixed(1)}k</p>
               <p className="text-xs text-text-mid mt-1">Tokens aprox.</p>
             </div>
-            <div className={`rounded-xl p-4 text-center ${apiConfigured ? 'bg-teal-light' : 'bg-red-50'}`}>
-              <p className={`text-3xl font-bold ${apiConfigured ? 'text-teal' : 'text-red-500'}`}>
-                {apiConfigured ? '✓' : '✗'}
-              </p>
-              <p className="text-xs text-text-mid mt-1">API configurada</p>
+            <div className="rounded-xl p-4 text-center bg-blue-light">
+              <p className="text-3xl font-bold text-blue">{config.faqs.length}</p>
+              <p className="text-xs text-text-mid mt-1">FAQs activas</p>
             </div>
           </div>
 

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import MessageBubble from './MessageBubble'
 import TypingIndicator from './TypingIndicator'
-import { Message, DocumentChunk, AgencyConfig } from '@/lib/types'
+import { Message, AgencyConfig } from '@/lib/types'
 import { getAllChunks, getConfig, getDocuments, generateId } from '@/lib/store'
 
 // Categorías de la pantalla de bienvenida
