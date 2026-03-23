@@ -20,17 +20,6 @@ export async function POST(request: NextRequest) {
 
     const summary = `[Cotizador] Seguro de ${insuranceType} — Plan ${selectedPlan?.name || 'N/A'} (${selectedPlan?.price ? `$${selectedPlan.price.toLocaleString('es-CO')}/mes` : 'N/A'}) | ${answerSummary}`
 
-    // Log the lead (in production this would save to a database and send emails)
-    console.log('=== NUEVO LEAD DEL COTIZADOR ===')
-    console.log(`Nombre: ${contactData.name}`)
-    console.log(`WhatsApp: ${contactData.whatsapp}`)
-    console.log(`Email: ${contactData.email || 'N/A'}`)
-    console.log(`Ciudad: ${contactData.city || 'N/A'}`)
-    console.log(`Seguro: ${insuranceType}`)
-    console.log(`Plan: ${selectedPlan?.name} - ${selectedPlan?.insurer}`)
-    console.log(`Resumen: ${summary}`)
-    console.log('================================')
-
     return Response.json(
       {
         ok: true,

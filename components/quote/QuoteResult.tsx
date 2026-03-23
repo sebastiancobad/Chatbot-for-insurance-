@@ -5,6 +5,9 @@ import type { Plan } from '@/lib/quote-engine'
 import type { ContactData } from './StepContact'
 import PlanCard from './PlanCard'
 
+// Replace with actual agency WhatsApp number
+const AGENCY_WHATSAPP = '573001234567'
+
 const RAMO_LABELS: Record<string, string> = {
   auto: 'Auto', vida: 'Vida', salud: 'Salud', hogar: 'Hogar', accidentes: 'Accidentes Personales', empresarial: 'Empresarial',
 }
@@ -54,7 +57,7 @@ export default function QuoteResult({ plans, contactData, insuranceType, onSelec
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a
-            href={`https://wa.me/573000000000?text=${waMessage}`}
+            href={`https://wa.me/${AGENCY_WHATSAPP}?text=${waMessage}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition"
@@ -127,7 +130,7 @@ export default function QuoteResult({ plans, contactData, insuranceType, onSelec
       <div className="text-center border-t border-border pt-6">
         <p className="text-text-mid text-sm mb-3">¿Prefieres que te contactemos directamente?</p>
         <a
-          href={`https://wa.me/573000000000?text=${waMessage}`}
+          href={`https://wa.me/${AGENCY_WHATSAPP}?text=${waMessage}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition"

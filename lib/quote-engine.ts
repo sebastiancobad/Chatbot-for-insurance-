@@ -82,8 +82,17 @@ function generateAutoQuote(answers: Record<string, string | string[]>): Plan[] {
   else if (value.includes('60M - 100M')) base = 175000
   else if (value.includes('100M')) base = 250000
 
+  const vehicleType = String(answers.tipo_vehiculo || '')
+  if (vehicleType === 'Moto') base *= 0.7
+  else if (vehicleType === 'Camioneta/SUV') base *= 1.1
+
   const year = parseInt(String(answers.anio_vehiculo || '2020'))
   if (year < 2015) base *= 1.15
+
+  const uso = String(answers.uso_vehiculo || '')
+  if (uso.includes('Transporte')) base *= 1.25
+  else if (uso.includes('Trabajo')) base *= 1.1
+
   if (String(answers.siniestros || '').includes('2')) base *= 1.2
   else if (String(answers.siniestros || '').includes('1')) base *= 1.1
   if (String(answers.garaje || '') === 'No') base *= 1.05
@@ -113,6 +122,10 @@ function generateVidaQuote(answers: Record<string, string | string[]>): Plan[] {
   if (monto.includes('300M - 500M')) base *= 1.3
   else if (monto.includes('Más')) base *= 1.6
 
+  const dependientes = String(answers.dependientes || '')
+  if (dependientes.includes('cónyuge e hijos')) base *= 1.15
+  else if (dependientes.includes('Solo cónyuge') || dependientes.includes('Solo hijos')) base *= 1.05
+
   return buildPlans(
     base,
     [c('Fallecimiento cualquier causa', true), c('Muerte accidental (doble)', true), c('Gastos funerarios', true), c('Enfermedades graves', false), c('Incapacidad total', false), c('Anticipo enfermedad terminal', false)],
@@ -134,13 +147,21 @@ function generateSaludQuote(answers: Record<string, string | string[]>): Plan[] 
   else if (age > 45) base *= 1.2
 
   if (String(answers.preexistencias || '').includes('Sí')) base *= 1.15
+  if (String(answers.medicamentos || '').includes('Sí')) base *= 1.1
+
+  const prioridad = String(answers.prioridad || '')
+  const reason = prioridad.includes('Prima baja')
+    ? 'La opción más económica para tu perfil.'
+    : prioridad.includes('amplia')
+    ? 'Cobertura amplia con las mejores clínicas.'
+    : 'Mejor equilibrio entre cobertura y precio.'
 
   return buildPlans(
     base,
     [c('Hospitalización y cirugía', true), c('Urgencias 24/7', true), c('Consultas especialistas', true), c('Telemedicina', true), c('Odontología', false), c('Maternidad', false), c('Medicamentos', false)],
     [c('Hospitalización y cirugía', true), c('Urgencias 24/7', true), c('Consultas especialistas', true), c('Telemedicina', true), c('Odontología', true), c('Maternidad', true), c('Medicamentos', false)],
     [c('Hospitalización y cirugía', true), c('Urgencias 24/7', true), c('Consultas especialistas', true), c('Telemedicina', true), c('Odontología', true), c('Maternidad', true), c('Medicamentos', true)],
-    'Cobertura amplia con las mejores clínicas.',
+    reason,
     ['Colsanitas', 'Sura', 'Allianz']
   )
 }
@@ -156,6 +177,13 @@ function generateHogarQuote(answers: Record<string, string | string[]>): Plan[] 
   const contents = String(answers.valor_contenido || '')
   if (contents.includes('20M - 50M')) base += 15000
   else if (contents.includes('Más')) base += 30000
+
+  const tipo = String(answers.tipo_inmueble || '')
+  if (tipo === 'Casa') base *= 1.1
+  else if (tipo === 'Local comercial') base *= 1.2
+
+  if (String(answers.zona_riesgo || '') === 'Sí') base *= 1.15
+  if (String(answers.propiedad || '') === 'Arrendatario') base *= 0.85
 
   return buildPlans(
     base,
@@ -198,6 +226,10 @@ function generateEmpresarialQuote(answers: Record<string, string | string[]>): P
 
   const needs = Array.isArray(answers.necesidades) ? answers.necesidades : []
   base += needs.length * 80000
+
+  const tipoEmpresa = String(answers.tipo_empresa || '')
+  if (tipoEmpresa === 'Construcción') base *= 1.3
+  else if (tipoEmpresa === 'Manufactura') base *= 1.2
 
   return buildPlans(
     base,

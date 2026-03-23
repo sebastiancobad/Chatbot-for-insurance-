@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { Suspense, useState, useEffect, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { getLeads, updateLead, markLeadsAsViewed, createLead } from '@/lib/leadStore'
 import { getConfig } from '@/lib/store'
@@ -38,6 +38,14 @@ function timeAgo(dateStr: string): string {
 }
 
 export default function LeadsPage() {
+  return (
+    <Suspense fallback={<div className="text-center py-16"><div className="w-8 h-8 border-3 border-blue border-t-transparent rounded-full animate-spin mx-auto" /></div>}>
+      <LeadsPageContent />
+    </Suspense>
+  )
+}
+
+function LeadsPageContent() {
   const searchParams = useSearchParams()
   const urlStatus = searchParams.get('status') as LeadStatus | null
   const urlSelected = searchParams.get('selected')

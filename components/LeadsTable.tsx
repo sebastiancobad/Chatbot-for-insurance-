@@ -107,6 +107,8 @@ export default function LeadsTable() {
           <option value="vida">Vida</option>
           <option value="salud">Salud</option>
           <option value="hogar">Hogar</option>
+          <option value="accidentes">Accidentes</option>
+          <option value="empresarial">Empresarial</option>
         </select>
         <select
           value={filterUrgency}
