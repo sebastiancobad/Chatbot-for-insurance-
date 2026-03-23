@@ -19,7 +19,7 @@ export default function DashboardMetrics() {
   const nuevos = leads.filter(l => l.status === 'nuevo')
 
   // Distribution by type
-  const typeCounts: Record<InsuranceType, number> = { auto: 0, vida: 0, salud: 0, hogar: 0, otro: 0 }
+  const typeCounts: Record<InsuranceType, number> = { auto: 0, vida: 0, salud: 0, hogar: 0, accidentes: 0, empresarial: 0, otro: 0 }
   leads.forEach(l => { typeCounts[l.insuranceType] = (typeCounts[l.insuranceType] || 0) + 1 })
   const totalLeads = leads.length || 1
 
@@ -58,7 +58,7 @@ export default function DashboardMetrics() {
   }
 
   const typeColors: Record<InsuranceType, string> = {
-    auto: 'bg-blue', vida: 'bg-purple-500', salud: 'bg-teal', hogar: 'bg-orange-500', otro: 'bg-gray-400'
+    auto: 'bg-blue', vida: 'bg-purple-500', salud: 'bg-teal', hogar: 'bg-orange-500', accidentes: 'bg-indigo-500', empresarial: 'bg-gray-700', otro: 'bg-gray-400'
   }
 
   return (

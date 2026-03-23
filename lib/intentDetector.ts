@@ -18,6 +18,8 @@ const INSURANCE_TYPES: Record<InsuranceType, string[]> = {
   vida: ['vida', 'fallecimiento', 'muerte', 'beneficiarios', 'deceso'],
   salud: ['salud', 'médico', 'medico', 'hospital', 'enfermedad', 'medicina', 'clínica', 'clinica'],
   hogar: ['hogar', 'casa', 'apartamento', 'vivienda', 'inmueble'],
+  accidentes: ['accidente', 'accidentes', 'invalidez', 'personal'],
+  empresarial: ['empresa', 'empresarial', 'negocio', 'empleados', 'pyme', 'colectivo'],
   otro: []
 }
 
@@ -27,7 +29,7 @@ function normalize(text: string): string {
 
 function detectInsuranceType(text: string): InsuranceType | null {
   const norm = normalize(text)
-  const types: InsuranceType[] = ['auto', 'vida', 'salud', 'hogar']
+  const types: InsuranceType[] = ['auto', 'vida', 'salud', 'hogar', 'accidentes', 'empresarial']
   for (const type of types) {
     const keywords = INSURANCE_TYPES[type]
     if (keywords.some(kw => norm.includes(normalize(kw)))) {
@@ -100,6 +102,8 @@ export function getInsuranceTypeLabel(type: InsuranceType): string {
     vida: 'Vida',
     salud: 'Salud',
     hogar: 'Hogar',
+    accidentes: 'Accidentes',
+    empresarial: 'Empresarial',
     otro: 'Otro'
   }
   return labels[type]

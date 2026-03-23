@@ -48,7 +48,7 @@ export interface UploadResponse {
 
 // --- Módulo de Ventas ---
 
-export type InsuranceType = 'auto' | 'vida' | 'salud' | 'hogar' | 'otro'
+export type InsuranceType = 'auto' | 'vida' | 'salud' | 'hogar' | 'accidentes' | 'empresarial' | 'otro'
 export type LeadStatus = 'nuevo' | 'contactado' | 'cotizado' | 'cerrado' | 'perdido'
 export type UrgencyLevel = 'esta_semana' | 'este_mes' | 'explorando'
 
