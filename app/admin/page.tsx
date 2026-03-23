@@ -15,13 +15,8 @@ export default function AdminPage() {
 
   const checkAuth = async () => {
     try {
-      // Intentar acceder a un endpoint protegido para verificar la cookie
-      const res = await fetch('/api/admin/upload', {
-        method: 'POST',
-        body: new FormData(), // vacío, solo para verificar auth
-      })
-      // Si retorna 401, no está autenticado; cualquier otro error es OK (auth pasó)
-      if (res.status !== 401) {
+      const res = await fetch('/api/admin/verify')
+      if (res.ok) {
         setAuthenticated(true)
       }
     } catch {
@@ -35,9 +30,8 @@ export default function AdminPage() {
     setAuthenticated(true)
   }
 
-  const handleLogout = () => {
-    // Borrar cookie enviando una que expire inmediatamente
-    document.cookie = 'admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+  const handleLogout = async () => {
+    await fetch('/api/admin/logout', { method: 'POST' })
     setAuthenticated(false)
   }
 

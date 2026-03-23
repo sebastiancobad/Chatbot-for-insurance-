@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import MessageBubble from './MessageBubble'
 import TypingIndicator from './TypingIndicator'
 import { Message, DocumentChunk, AgencyConfig } from '@/lib/types'
-import { getAllChunks, getConfig, generateId } from '@/lib/store'
+import { getAllChunks, getConfig, getDocuments, generateId } from '@/lib/store'
 
 // Categorías de la pantalla de bienvenida
 const CATEGORIES = [
@@ -52,15 +52,8 @@ export default function ChatInterface() {
   // Cargar configuración al montar
   useEffect(() => {
     setConfig(getConfig())
-    setDocCount(getAllChunks().length > 0 ? getDocuments().length : 0)
+    setDocCount(getDocuments().length)
   }, [])
-
-  function getDocuments() {
-    try {
-      const data = localStorage.getItem('seguros_documents')
-      return data ? JSON.parse(data) : []
-    } catch { return [] }
-  }
 
   // Scroll automático al nuevo mensaje
   useEffect(() => {
