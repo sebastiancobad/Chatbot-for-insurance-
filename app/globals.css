@@ -54,3 +54,31 @@ body {
 .border-3 {
   border-width: 3px;
 }
+
+/* Chat widget animations */
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeInSlideUp 0.2s ease-out;
+}
+
+.fade-in {
+  animation-name: fadeInSlideUp;
+}
+
+.slide-in-from-bottom-2 {
+  --tw-enter-translate-y: 0.5rem;
+}
+
+.slide-in-from-bottom-4 {
+  --tw-enter-translate-y: 1rem;
+}

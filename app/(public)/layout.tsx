@@ -1,6 +1,6 @@
 import PublicHeader from '@/components/layout/PublicHeader'
 import PublicFooter from '@/components/layout/PublicFooter'
-import FloatingChatButton from '@/components/layout/FloatingChatButton'
+import ChatWidget from '@/components/chat/ChatWidget'
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,7 +8,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <PublicHeader />
       <main>{children}</main>
       <PublicFooter />
-      <FloatingChatButton />
+      <ChatWidget />
     </>
   )
 }
