@@ -7,12 +7,12 @@ import { getConfig } from '@/lib/store'
 import type { Lead, LeadStatus, InsuranceType, UrgencyLevel } from '@/lib/types'
 
 const STATUS_LABELS: Record<LeadStatus, string> = {
-  nuevo: 'Nuevo', contactado: 'Contactado', cotizado: 'Cotizado', cerrado: 'Cerrado', perdido: 'Perdido'
+  nuevo: 'Nuevo', contactado: 'Contactado', cotizado: 'Cotizado', negociando: 'Negociando', cerrado: 'Cerrado', perdido: 'Perdido'
 }
 const STATUS_COLORS: Record<LeadStatus, string> = {
   nuevo: 'bg-blue-light text-blue', contactado: 'bg-yellow-50 text-yellow-700',
-  cotizado: 'bg-purple-50 text-purple-700', cerrado: 'bg-green-50 text-green-700',
-  perdido: 'bg-red-50 text-red-500'
+  cotizado: 'bg-purple-50 text-purple-700', negociando: 'bg-orange-50 text-orange-700',
+  cerrado: 'bg-green-50 text-green-700', perdido: 'bg-red-50 text-red-500'
 }
 
 export default function LeadsTable() {

@@ -49,7 +49,7 @@ export interface UploadResponse {
 // --- Módulo de Ventas ---
 
 export type InsuranceType = 'auto' | 'vida' | 'salud' | 'hogar' | 'accidentes' | 'empresarial' | 'otro'
-export type LeadStatus = 'nuevo' | 'contactado' | 'cotizado' | 'cerrado' | 'perdido'
+export type LeadStatus = 'nuevo' | 'contactado' | 'cotizado' | 'negociando' | 'cerrado' | 'perdido'
 export type UrgencyLevel = 'esta_semana' | 'este_mes' | 'explorando'
 
 export interface Lead {
@@ -64,8 +64,11 @@ export interface Lead {
   status: LeadStatus
   notes?: string
   quoteData?: Record<string, string>
-  source: 'web' | 'whatsapp'
+  source: 'web' | 'whatsapp' | 'cotizador' | 'manual'
   viewedByAdmin?: boolean
+  followUpAt?: string
+  contactedAt?: string
+  city?: string
 }
 
 export interface ConversationRecord {
