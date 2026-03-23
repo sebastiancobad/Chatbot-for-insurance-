@@ -1,14 +1,19 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import AdminSidebar from '@/components/AdminSidebar'
 import AdminPanel from '@/components/AdminPanel'
+import DashboardMetrics from '@/components/DashboardMetrics'
+import LeadsTable from '@/components/LeadsTable'
 import LoginModal from '@/components/LoginModal'
+
+type AdminSection = 'dashboard' | 'leads' | 'docs' | 'config'
 
 export default function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false)
   const [checking, setChecking] = useState(true)
+  const [section, setSection] = useState<AdminSection>('dashboard')
 
-  // Verificar si ya está autenticado (cookie existe)
   useEffect(() => {
     checkAuth()
   }, [])
@@ -16,18 +21,12 @@ export default function AdminPage() {
   const checkAuth = async () => {
     try {
       const res = await fetch('/api/admin/verify')
-      if (res.ok) {
-        setAuthenticated(true)
-      }
+      if (res.ok) setAuthenticated(true)
     } catch {
-      // Error de red, mostrar login
+      // Show login
     } finally {
       setChecking(false)
     }
-  }
-
-  const handleLoginSuccess = () => {
-    setAuthenticated(true)
   }
 
   const handleLogout = async () => {
@@ -46,43 +45,48 @@ export default function AdminPage() {
   if (!authenticated) {
     return (
       <div className="min-h-screen bg-bg flex items-center justify-center">
-        <LoginModal
-          onSuccess={handleLoginSuccess}
-          onClose={() => window.location.href = '/'}
-        />
+        <LoginModal onSuccess={() => setAuthenticated(true)} onClose={() => window.location.href = '/'} />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-bg">
-      {/* Header del admin */}
-      <header className="sticky top-0 z-40 bg-white border-b border-border shadow-sm">
-        <div className="max-w-4xl mx-auto flex items-center justify-between px-4 py-3">
-          <div className="flex items-center gap-3">
-            <a href="/" className="text-text-soft hover:text-blue transition" title="Volver al chat">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </a>
-            <h1 className="font-title text-lg font-bold text-text">Panel de Administración</h1>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="text-text-soft hover:text-red-500 text-sm transition flex items-center gap-1"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            Cerrar sesión
-          </button>
-        </div>
-      </header>
+    <div className="min-h-screen bg-bg flex">
+      {/* Sidebar */}
+      <AdminSidebar active={section} onNavigate={setSection} />
 
-      {/* Panel principal */}
-      <main className="p-4 md:p-8">
-        <AdminPanel />
-      </main>
+      {/* Main content */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <header className="sticky top-0 z-40 bg-white border-b border-border shadow-sm">
+          <div className="flex items-center justify-between px-6 py-3">
+            <h1 className="font-title text-lg font-bold text-text">
+              {section === 'dashboard' && 'Dashboard'}
+              {section === 'leads' && 'Leads'}
+              {section === 'docs' && 'Documentos y Configuración'}
+              {section === 'config' && 'Configuración'}
+            </h1>
+            <button
+              onClick={handleLogout}
+              className="text-text-soft hover:text-red-500 text-sm transition flex items-center gap-1"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Cerrar sesión
+            </button>
+          </div>
+        </header>
+
+        <main className="flex-1 p-6 overflow-y-auto">
+          {section === 'dashboard' && <DashboardMetrics />}
+          {section === 'leads' && <LeadsTable />}
+          {(section === 'docs' || section === 'config') && (
+            <div className="max-w-4xl">
+              <AdminPanel />
+            </div>
+          )}
+        </main>
+      </div>
     </div>
   )
 }
